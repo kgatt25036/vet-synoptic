@@ -1,0 +1,11 @@
+<header>
+    <nav>
+      <ul>
+        <li><a [routerLink]="['/view-tests']">View Tests</a></li>
+        <li><a [routerLink]="['/add-test']">Add Test</a></li>
+        <!-- Add other links as needed -->
+      </ul>
+      <button *ngIf="isLoggedIn" (click)="signOut()">Sign Out</button>
+    </nav>
+  </header>
+  
