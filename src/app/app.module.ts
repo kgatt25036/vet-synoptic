@@ -10,6 +10,7 @@ import { AddTestComponent } from './add-test/add-test.component';
 import { UpdateTestComponent } from './update-test/update-test.component';
 import { HeaderComponent } from './header/header.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormatIsVirusDetectedPipe } from './format-is-virus-detected.pipe'; // Import the custom pipe
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ViewTestDetailsComponent,
     AddTestComponent,
     UpdateTestComponent,
-    HeaderComponent
+    HeaderComponent,
+    FormatIsVirusDetectedPipe
   ],
   imports: [
     BrowserModule,

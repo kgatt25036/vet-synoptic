@@ -19,30 +19,46 @@ export class AuthService {
     'Accept': '*/*'
 });
   constructor(private http: HttpClient) {
-    this.tokenSubject = new BehaviorSubject<string | null>(localStorage.getItem('token'));
+    this.tokenSubject = new BehaviorSubject<string | null>(localStorage.getItem('accessToken'));
   }
 
-  // Method to check if user is authenticated
-  isAuthenticated(): boolean {
-    return this.isLoggedIn;
-  }
-
- 
   signIn(authrequest:ApiAuthRequest): Observable<any> {
    //let requestBody  :string =`{"email": "${email}","password": "${password}"}`; // Create request body
    authrequest;
-    return this.http.post<any>(`${this.apiUrl}/api/auth`, authrequest, { headers: this.httpHeader });
+    return this.http.post<any>(`${this.apiUrl}/api/auth`, authrequest, { headers: this.httpHeader }).pipe(
+      tap(response => {
+        const accessToken = response.accessToken;
+        const tokenType = response.tokenType;
+
+        if (accessToken) {
+          localStorage.setItem('accessToken', accessToken);
+          localStorage.setItem('tokenType', tokenType);
+          this.tokenSubject.next(`${tokenType} ${accessToken}`);
+          this.isLoggedIn = true;
+        }
+      })
+    );
   }
 
-  getToken(): string | null {
-    return this.tokenSubject.value;
+  getAuthorizationHeader(): string | null {
+    const accessToken = localStorage.getItem('accessToken');
+    const tokenType = localStorage.getItem('tokenType');
+    if (accessToken && tokenType) {
+      return `${tokenType} ${accessToken}`;
+    }
+    return null;
   }
-
 
   // Method to sign the user out
   signOut(): void {
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('tokenType');
     this.tokenSubject.next(null);
     this.isLoggedIn = false;
+  }
+  
+  // Method to check if user is authenticated
+  isAuthenticated(): boolean {
+    return this.isLoggedIn;
   }
 }
