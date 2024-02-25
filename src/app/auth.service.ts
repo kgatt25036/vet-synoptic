@@ -49,6 +49,14 @@ export class AuthService {
     return null;
   }
 
+  getToken(): string | null {
+    const accessToken = localStorage.getItem('accessToken');
+    if (accessToken) {
+      return `${accessToken}`;
+    }
+    return null;
+  }
+
   // Method to sign the user out
   signOut(): void {
     localStorage.removeItem('accessToken');
