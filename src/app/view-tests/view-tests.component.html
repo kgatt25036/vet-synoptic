@@ -1,29 +1,32 @@
-<!-- view-tests.component.html -->
-
-<table>
-    <thead>
-      <tr>
-        <th>Test ID</th>
-        <th>Vet Registration Number</th>
-        <th>Pet Microchip Number</th>
-        <th>Pet Type</th>
-        <th>Owner ID Number</th>
-        <th>Owner First Name</th>
-        <th>Owner Last Name</th>
-        <th>Is Virus Detected</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let test of tests$ | async">
-        <td>{{ test.testId }}</td>
-        <td>{{ test.vetRegistrationNumber }}</td>
-        <td>{{ test.petMicrochipNumber }}</td>
-        <td>{{ test.petType }}</td>
-        <td>{{ test.ownerIdCardNumber }}</td>
-        <td>{{ test.ownerFirstName }}</td>
-        <td>{{ test.ownerLastName }}</td>
-        <td>{{ test.isVirusDetected | formatIsVirusDetected }}</td> <!-- Apply custom pipe -->
-      </tr>
-    </tbody>
-  </table>
-  
+<table class="table">
+  <thead>
+    <tr>
+      <th>Test ID</th>
+      <th>Vet Registration Number</th>
+      <th>Pet Microchip Number</th>
+      <th>Pet Type</th>
+      <th>Owner ID Number</th>
+      <th>Owner First Name</th>
+      <th>Owner Last Name</th>
+      <th>Is Virus Detected</th>
+      <th>Actions</th> <!-- Add a new column for actions -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let test of tests$ | async">
+      <td>{{ test.testId }}</td>
+      <td>{{ test.vetRegistrationNumber }}</td>
+      <td>{{ test.petMicrochipNumber }}</td>
+      <td>{{ test.petType }}</td>
+      <td>{{ test.ownerIdCardNumber }}</td>
+      <td>{{ test.ownerFirstName }}</td>
+      <td>{{ test.ownerLastName }}</td>
+      <td>{{ test.isVirusDetected | formatIsVirusDetected }}</td>
+      <td>
+        <button class="btn btn-primary" (click)="viewTest(test.testId)">View</button>
+        <button class="btn btn-info" (click)="updateTest(test.testId)">Update</button>
+        <button class="btn btn-danger" (click)="deleteTest(test.testId)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -5,6 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FormatIsVirusDetectedPipe implements PipeTransform {
   transform(value: boolean): string {
-    return value ? 'Positive' : 'Negative';
+    return value ? 'Reactive' : 'Non-Reactive';
   }
 }

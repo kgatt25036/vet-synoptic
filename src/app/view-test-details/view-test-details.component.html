@@ -1,1 +1,12 @@
-<p>view-test-details works!</p>
+<div *ngIf="test$ | async as test">
+    <h2>Test Details</h2>
+    <p>Test ID: {{ test.testId }}</p>
+    <p>Vet Registration Number: {{ test.vetRegistrationNumber }}</p>
+    <p>Pet Microchip Number: {{ test.petMicrochipNumber }}</p>
+    <p>Pet Type: {{ test.petType }}</p>
+    <p>Owner ID Number: {{ test.ownerIdNumber }}</p>
+    <p>Owner First Name: {{ test.ownerFirstName }}</p>
+    <p>Owner Last Name: {{ test.ownerLastName }}</p>
+    <p>Is Virus Detected: {{ test.isVirusDetected | formatIsVirusDetected }}</p>
+  </div>
+  
