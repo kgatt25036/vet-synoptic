@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-view-test-details',
@@ -9,21 +9,31 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./view-test-details.component.css']
 })
 export class ViewTestDetailsComponent implements OnInit {
-  testId!: string; // Add the exclamation mark to mark it as definitely assigned
+  testId!: string;
   test$?: Observable<any>;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient
+  ) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.testId = params['id'];
-      // Assuming you have a service to fetch test details by ID
+      // Fetch test details
       this.test$ = this.fetchTestDetails(this.testId);
     });
   }
 
   fetchTestDetails(testId: string): Observable<any> {
-    // Implement your logic to fetch test details from backend using the testId
-    // Return an Observable with the test details
+    const authToken = localStorage.getItem('accessToken');
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${authToken}` // Include authentication token in the request headers
+    });
+
+    // Make an HTTP GET request to fetch test details by ID
+    return this.http.get<any>(`http://localhost:8080/api/tests/${testId}`, { headers });
   }
 }
